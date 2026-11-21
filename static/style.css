@@ -97,9 +97,7 @@ button, input { font: inherit; color: inherit; }
   z-index: 1000;
   overflow-y: auto;
 }
-.category-board h1{
-  margin :0;
-}
+
 /* Show board ONLY when details is opened */
 .category-manager[open] .category-board {
   display: block;
@@ -109,4 +107,10 @@ button, input { font: inherit; color: inherit; }
   .app { flex-direction: column; }
   .panel { flex: 0 0 auto; max-height: 45%; border-right: 0; border-bottom: 1px solid var(--line); }
   .map { flex: 1; }
+
+  .category-board {
+    width: 90%;
+    height: 60vh;
+    padding: 15px;
+  }
 }
