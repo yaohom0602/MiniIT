@@ -114,6 +114,16 @@ button, input { font: inherit; color: inherit; }
     padding: 15px;
   }
 
+      .manage-container { padding: 20px 16px; text-align: center; }
+
+    .manage-form form { flex-direction: column; align-items: center; }
+    .field { width: 100%; max-width: 360px; flex: none; text-align: left; }
+
+    .chip-list { justify-content: center; }
+    .location-chip[open] { max-width: 100%; }
+
+    .chip-panel { justify-content: center; }
+    .edit-form { flex-direction: column; width: 100%; }
 }
 
 
@@ -229,8 +239,8 @@ button, input { font: inherit; color: inherit; }
     place-items: center;
     width: 30px;
     height: 30px;
-    color: #555;
-    border-radius: 50%;
+    color: #8d8d8d;
+
 }
 .chip-wrench:hover,
 .location-chip[open] .chip-wrench { background: #eee; color: #000; }
@@ -254,17 +264,3 @@ button, input { font: inherit; color: inherit; }
 .edit-form input,
 .edit-form select { min-width: 0; flex: 1; }
 
-/* ----- Phone / small screens: center everything ----- */
-
-@media (max-width: 640px) {
-    .manage-container { padding: 20px 16px; text-align: center; }
-
-    .manage-form form { flex-direction: column; align-items: center; }
-    .field { width: 100%; max-width: 360px; flex: none; text-align: left; }
-
-    .chip-list { justify-content: center; }
-    .location-chip[open] { max-width: 100%; }
-
-    .chip-panel { justify-content: center; }
-    .edit-form { flex-direction: column; width: 100%; }
-}
