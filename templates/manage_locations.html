@@ -37,147 +37,92 @@
 
         <h1>Manage Locations</h1>
 
-        <p>Manage all available MMU classrooms.</p>
-
-
-        <!-- FLASH MESSAGES -->
-
         {% with messages = get_flashed_messages() %}
-
             {% for message in messages %}
-
-                <div class="flash-message">
-                    {{ message }}
-                </div>
-
+                <div class="flash-message">{{ message }}</div>
             {% endfor %}
-
         {% endwith %}
 
-
-        <!-- ADD CLASSROOM -->
-
+        <!-- ADD LOCATION -->
         <section class="manage-form">
+            <h2>Add Location</h2>
 
-            <h2>Add New Classroom</h2>
+            <form action="{{ url_for('add_new_location') }}" method="POST">
 
-            <form action="{{ url_for('add_new_location') }}"
-                  method="POST">
-
-                <label>Location Name</label>
-
-                <input
-                    type="text"
-                    name="room_code"
-                    placeholder="e.g. CQAR2001"
-                    required
-                >
-
-                <label>Faculty</label>
-
-                <select name="category" required>
-
-                    <option value="">Select Faculty</option>
-
-                    <option value="FCI">FCI</option>
-                    <option value="FOE">FOE</option>
-                    <option value="FAC">FAC</option>
-                    <option value="FCM">FCM</option>
-                    <option value="FOM">FOM</option>
-
-                </select>
-
-                <button type="submit" class="add-btn">
-                    + Add Classroom
-                </button>
-
-            </form>
-
-        </section>
-
-
-        <!-- AVAILABLE CLASSROOMS -->
-
-        <section class="location-list">
-
-            <h2>Available Locations</h2>
-
-            <p>Total: {{ locations|length }} classrooms</p>
-
-
-            {% for location in locations %}
-
-                <div class="location-card">
-
-                    <!-- EDIT FORM -->
-
-                    <form action="{{ url_for('edit_location', location_id=location['id']) }}"
-                          method="POST"
-                          class="edit-form">
-
-                        <input
-                            type="text"
-                            name="room_code"
-                            value="{{ location['room_code'] }}"
-                            required
-                        >
-
-                        <select name="category" required>
-
-                            <option value="FCI"
-                                {% if location['category'] == 'FCI' %}selected{% endif %}>
-                                FCI
-                            </option>
-
-                            <option value="FOE"
-                                {% if location['category'] == 'FOE' %}selected{% endif %}>
-                                FOE
-                            </option>
-
-                            <option value="FAC"
-                                {% if location['category'] == 'FAC' %}selected{% endif %}>
-                                FAC
-                            </option>
-
-                            <option value="FCM"
-                                {% if location['category'] == 'FCM' %}selected{% endif %}>
-                                FCM
-                            </option>
-
-                            <option value="FOM"
-                                {% if location['category'] == 'FOM' %}selected{% endif %}>
-                                FOM
-                            </option>
-
-                        </select>
-
-                        <button type="submit" class="edit-btn">
-                            Save Changes
-                        </button>
-
-                    </form>
-
-
-                    <!-- DELETE FORM -->
-
-                    <form action="{{ url_for('remove_location', location_id=location['id']) }}"
-                          method="POST">
-
-                        <button type="submit" class="delete-btn">
-                            Delete
-                        </button>
-
-                    </form>
-
+                <div class="field">
+                    <label for="room_code">Location Name</label>
+                    <input type="text" id="room_code" name="room_code"
+                        placeholder="e.g. CQAR2001" required>
                 </div>
 
-            {% else %}
+                <div class="field">
+                    <label for="category">Category</label>
+                    <select id="category" name="category" required>
+                        <option value="">Select Faculty</option>
+                        <option value="FCI">FCI</option>
+                        <option value="FOE">FOE</option>
+                        <option value="FAC">FAC</option>
+                        <option value="FCM">FCM</option>
+                        <option value="FOM">FOM</option>
+                    </select>
+                </div>
 
-                <p>No classrooms registered yet.</p>
+                <button type="submit" class="add-btn">+ Add</button>
+            </form>
+        </section>
 
-            {% endfor %}
+        <!-- LIST OF LOCATIONS -->
+        <section class="location-list">
+            <h2>List of Locations</h2>
+            <p class="total">Total: {{ locations|length }}</p>
 
+            <div class="chip-list">
+                {% for location in locations %}
 
+                <details class="location-chip">
+                    <summary>
+                        <span class="chip-name">{{ location['room_code'] }}</span>
+                        <span class="chip-badge">{{ location['category'] }}</span>
+                        <span class="chip-wrench" title="Edit / Delete">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/>
+                            </svg>
+                        </span>
+                    </summary>
+
+                    <div class="chip-panel">
+                        <!-- EDIT -->
+                        <form action="{{ url_for('edit_location', location_id=location['id']) }}"
+                            method="POST" class="edit-form">
+
+                            <input type="text" name="room_code"
+                                value="{{ location['room_code'] }}" required>
+
+                            <select name="category" required>
+                                {% for fac in ['FCI', 'FOE', 'FAC', 'FCM', 'FOM'] %}
+                                    <option value="{{ fac }}"
+                                        {% if location['category'] == fac %}selected{% endif %}>
+                                        {{ fac }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+
+                            <button type="submit" class="edit-btn">Save</button>
+                        </form>
+
+                        <!-- DELETE -->
+                        <form action="{{ url_for('remove_location', location_id=location['id']) }}"
+                            method="POST">
+                            <button type="submit" class="delete-btn">Delete</button>
+                        </form>
+                    </div>
+                </details>
+
+                {% else %}
+                    <p>No locations registered yet.</p>
+                {% endfor %}
+            </div>
         </section>
 
     </main>

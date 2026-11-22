@@ -113,74 +113,137 @@ button, input { font: inherit; color: inherit; }
     height: 60vh;
     padding: 15px;
   }
-/* MANAGEMENT PAGE */
-  .location-card {
-    align-items: stretch;
-    flex-direction: column;
-  }
 
-    .edit-form {
-        flex-direction: column;
-    }
 }
 
 
-/* MANAGEMENT PAGE */
+/* ---------- MANAGEMENT PAGE ---------- */
 
 .manage-container {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 20px;
+    width: 100%;
+    padding: 32px;            /* left-aligned, full width: no auto margins */
 }
 
-.manage-form {
-    background: var(--paper--);
-    padding: 25px;
-    border-radius: 10px;
-    margin-top: 25px;
-    border: 1px solid #eee;
+.manage-container h1 { margin: 0 0 24px; }
+.manage-container h2 { margin: 0 0 14px; font-size: 1.25rem; }
+
+.flash-message {
+    padding: 12px;
+    margin-bottom: 20px;
+    background: #e8f5ed;
+    color: #176b50;
+    border-radius: 6px;
 }
+
+/* ----- Add form: fields side by side ----- */
+
+.manage-form { margin-bottom: 36px; }
 
 .manage-form form {
     display: flex;
-    flex-direction: column;
-    gap: 12px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 16px;
 }
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1 1 220px;
+    max-width: 320px;
+}
+
+.field label { font-weight: 500; }
 
 .manage-form input,
-.manage-form select {
-    padding: 12px;
+.manage-form select,
+.edit-form input,
+.edit-form select {
+    padding: 10px 12px;
     border: 1px solid #ddd;
     border-radius: 6px;
+    background: #fff;
+    font: inherit;
 }
 
-.add-btn {
-    padding: 12px;
-    background: #176b50;
-    color: white;
+.add-btn,
+.edit-btn,
+.delete-btn {
+    padding: 10px 16px;
+    color: #fff;
     border: none;
     border-radius: 6px;
     cursor: pointer;
+    font: inherit;
+}
+.add-btn    { background: #176b50; }
+.edit-btn   { background: #2865a5; }
+.delete-btn { background: #d64545; }
+
+/* ----- Location chips ----- */
+
+.total { margin: 0 0 16px; color: #666; }
+
+.chip-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-start;
 }
 
-/* CLASSROOM LIST */
-
-.location-list {
-    margin-top: 35px;
+.location-chip {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 999px;          /* pill when closed */
 }
 
-.location-card {
+.location-chip[open] {
+    flex-basis: 100%;              /* open chip takes its own row */
+    max-width: 620px;
+    border-radius: 16px;
+}
+
+.location-chip summary {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
+    gap: 10px;
+    padding: 8px 8px 8px 16px;
+    cursor: pointer;
+    list-style: none;
+}
+.location-chip summary::-webkit-details-marker { display: none; }
 
-    padding: 15px;
-    margin-bottom: 12px;
+.chip-name { font-weight: 500; }
 
-    background: white;
-    border: 1px solid #eee;
-    border-radius: 8px;
+.chip-badge {
+    padding: 2px 10px;
+    font-size: .85rem;
+    background: #e8f5ed;
+    color: #176b50;
+    border-radius: 999px;
+}
+
+.chip-wrench {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    color: #555;
+    border-radius: 50%;
+}
+.chip-wrench:hover,
+.location-chip[open] .chip-wrench { background: #eee; color: #000; }
+
+/* ----- Edit / delete area (only visible when wrench clicked) ----- */
+
+.chip-panel {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px 16px;
+    border-top: 1px solid #eee;
 }
 
 .edit-form {
@@ -188,39 +251,20 @@ button, input { font: inherit; color: inherit; }
     flex: 1;
     gap: 10px;
 }
-
 .edit-form input,
-.edit-form select {
-    min-width: 0;
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-}
+.edit-form select { min-width: 0; flex: 1; }
 
-.edit-btn {
-    padding: 10px 14px;
-    background: #2865a5;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-}
+/* ----- Phone / small screens: center everything ----- */
 
-.delete-btn {
-    padding: 10px 14px;
-    background: #d64545;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-}
+@media (max-width: 640px) {
+    .manage-container { padding: 20px 16px; text-align: center; }
 
-.flash-message {
-    padding: 12px;
-    margin-top: 12px;
-    background: #e8f5ed;
-    color: #176b50;
-    border-radius: 6px;
-}
+    .manage-form form { flex-direction: column; align-items: center; }
+    .field { width: 100%; max-width: 360px; flex: none; text-align: left; }
 
+    .chip-list { justify-content: center; }
+    .location-chip[open] { max-width: 100%; }
+
+    .chip-panel { justify-content: center; }
+    .edit-form { flex-direction: column; width: 100%; }
+}
