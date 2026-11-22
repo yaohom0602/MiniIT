@@ -48,12 +48,12 @@ def view_locations():
 
     return locations
 
-def delete_location(room_code):
+def delete_location(location_id):
     conn = get_connection()
     cursor = conn.execute("""
         DELETE FROM locations
-        WHERE room_code = ?
-    """,(room_code,))
+        WHERE id = ?
+    """,(location_id,))
 
     conn.commit()
     deleted = cursor.rowcount > 0
@@ -64,7 +64,7 @@ def update_location(location_id,room_code,category):
     conn = get_connection()
     
     try:
-        cursor = conn.execute()("""
+        cursor = conn.execute("""
             UPDATE locations
 
             SET room_code = ?,
