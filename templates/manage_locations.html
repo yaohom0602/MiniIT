@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>Manage Locations - MMU Navigator</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header class="topbar">
+
+        <a href="/" class="brand">
+            MMU Navigator
+        </a>
+
+        <a href="/" class="admin-link">
+            Back to Map
+        </a>
+
+    </header>
+
+
+    <main class="manage-container">
+
+        <h1>Manage Locations</h1>
+
+        <p>Manage all available MMU classrooms.</p>
+
+
+        <!-- FLASH MESSAGES -->
+
+        {% with messages = get_flashed_messages() %}
+
+            {% for message in messages %}
+
+                <div class="flash-message">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endwith %}
+
+
+        <!-- ADD CLASSROOM -->
+
+        <section class="manage-form">
+
+            <h2>Add New Classroom</h2>
+
+            <form action="{{ url_for('add_new_location') }}"
+                  method="POST">
+
+                <label>Location Name</label>
+
+                <input
+                    type="text"
+                    name="room_code"
+                    placeholder="e.g. CQAR2001"
+                    required
+                >
+
+                <label>Faculty</label>
+
+                <select name="category" required>
+
+                    <option value="">Select Faculty</option>
+
+                    <option value="FCI">FCI</option>
+                    <option value="FOE">FOE</option>
+                    <option value="FAC">FAC</option>
+                    <option value="FCM">FCM</option>
+                    <option value="FOM">FOM</option>
+
+                </select>
+
+                <button type="submit" class="add-btn">
+                    + Add Classroom
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- AVAILABLE CLASSROOMS -->
+
+        <section class="location-list">
+
+            <h2>Available Locations</h2>
+
+            <p>Total: {{ locations|length }} classrooms</p>
+
+
+            {% for location in locations %}
+
+                <div class="location-card">
+
+                    <!-- EDIT FORM -->
+
+                    <form action="{{ url_for('edit_location', location_id=location['id']) }}"
+                          method="POST"
+                          class="edit-form">
+
+                        <input
+                            type="text"
+                            name="room_code"
+                            value="{{ location['room_code'] }}"
+                            required
+                        >
+
+                        <select name="category" required>
+
+                            <option value="FCI"
+                                {% if location['category'] == 'FCI' %}selected{% endif %}>
+                                FCI
+                            </option>
+
+                            <option value="FOE"
+                                {% if location['category'] == 'FOE' %}selected{% endif %}>
+                                FOE
+                            </option>
+
+                            <option value="FAC"
+                                {% if location['category'] == 'FAC' %}selected{% endif %}>
+                                FAC
+                            </option>
+
+                            <option value="FCM"
+                                {% if location['category'] == 'FCM' %}selected{% endif %}>
+                                FCM
+                            </option>
+
+                            <option value="FOM"
+                                {% if location['category'] == 'FOM' %}selected{% endif %}>
+                                FOM
+                            </option>
+
+                        </select>
+
+                        <button type="submit" class="edit-btn">
+                            Save Changes
+                        </button>
+
+                    </form>
+
+
+                    <!-- DELETE FORM -->
+
+                    <form action="{{ url_for('remove_location', location_id=location['id']) }}"
+                          method="POST">
+
+                        <button type="submit" class="delete-btn">
+                            Delete
+                        </button>
+
+                    </form>
+
+                </div>
+
+            {% else %}
+
+                <p>No classrooms registered yet.</p>
+
+            {% endfor %}
+
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>

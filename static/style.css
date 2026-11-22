@@ -113,4 +113,114 @@ button, input { font: inherit; color: inherit; }
     height: 60vh;
     padding: 15px;
   }
+/* MANAGEMENT PAGE */
+  .location-card {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+    .edit-form {
+        flex-direction: column;
+    }
 }
+
+
+/* MANAGEMENT PAGE */
+
+.manage-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.manage-form {
+    background: var(--paper--);
+    padding: 25px;
+    border-radius: 10px;
+    margin-top: 25px;
+    border: 1px solid #eee;
+}
+
+.manage-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.manage-form input,
+.manage-form select {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.add-btn {
+    padding: 12px;
+    background: #176b50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* CLASSROOM LIST */
+
+.location-list {
+    margin-top: 35px;
+}
+
+.location-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    padding: 15px;
+    margin-bottom: 12px;
+
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+.edit-form {
+    display: flex;
+    flex: 1;
+    gap: 10px;
+}
+
+.edit-form input,
+.edit-form select {
+    min-width: 0;
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.edit-btn {
+    padding: 10px 14px;
+    background: #2865a5;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.delete-btn {
+    padding: 10px 14px;
+    background: #d64545;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.flash-message {
+    padding: 12px;
+    margin-top: 12px;
+    background: #e8f5ed;
+    color: #176b50;
+    border-radius: 6px;
+}
+
