@@ -114,7 +114,8 @@ button, input { font: inherit; color: inherit; }
 
 .manage-container {
     width: 100%;
-    padding: 32px;            /* left-aligned, full width: no auto margins */
+    padding: 32px;
+    zoom:1.1;
 }
 
 .manage-container h1 { margin: 0 0 24px; }
@@ -197,7 +198,7 @@ button, input { font: inherit; color: inherit; }
 
 .location-chip[open] {
     flex-basis: 100%;              /* open chip takes its own row */
-    max-width: 620px;
+    max-width: 500px;
     border-radius: 16px;
 }
 
@@ -256,6 +257,23 @@ button, input { font: inherit; color: inherit; }
 .edit-row input,
 .edit-row select { flex: 1; min-width: 0; }
 
+.edit-row .description-row{
+  flex-direction: column;
+  align-items:flex-start;
+  width:80%;
+  margin: 0 auto;
+}
+.edit-row textarea{
+  width: 100%;
+  resize: vertical;   
+  min-height: 100px;
+  padding: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
 .edit-actions { display: flex; margin-left: auto; gap: 15px; }
 
 /* ---------- Mobile: panel stacks above the map ---------- */
@@ -270,14 +288,14 @@ button, input { font: inherit; color: inherit; }
     padding: 15px;
   }
 
-      .manage-container { padding: 20px 16px; text-align: center; }
+  .manage-container { padding: 20px 16px; text-align: center; }
 
-    .manage-form form { flex-direction: column; align-items: center; }
-    .field { width: 100%; max-width: 360px; flex: none; text-align: left; }
+  .manage-form form { flex-direction: column; align-items: center; }
+  .field { width: 100%; max-width: 360px; flex: none; text-align: left; }
 
-    .chip-list { justify-content: center; }
-    .location-chip[open] { max-width: 100%; }
+  .chip-list { justify-content: center; }
+  .location-chip[open] { max-width: 100%; }
 
-    .chip-panel { justify-content: center; }
-    .edit-form { flex-direction: column; width: 100%; }
+  .chip-panel { justify-content: center; }
+  .edit-form { flex-direction: column; width: 100%; }
 }

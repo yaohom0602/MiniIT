@@ -105,12 +105,13 @@
                             </select>
                         </div>
 
-                        <div class="edit-row">
+                        <div class="edit-row description-row">
                             <label for="desc-{{ location['id'] }}">Description</label>
-                            <input type="text" id="desc-{{ location['id'] }}"
+                            <textarea 
+                                id="desc-{{ location['id'] }}"
                                 name="location_description"
-                                value="{{ location['description'] or '' }}"
-                                placeholder="Optional">
+                                rows="4"
+                                placeholder="Optional">{{ location['description'] or '' }} </textarea>
                         </div>
 
                         <div class="edit-actions">
