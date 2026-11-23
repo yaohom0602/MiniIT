@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Register Admin | MMU Navigator</title>
+
+    <link rel="stylesheet" href="/admin.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header class="login-topbar">
+        <a href="/" class="brand">
+            <span class="brand-icon">✦</span>
+            <span>MMU Navigator</span>
+        </a>
+
+        <span class="admin-label">ADMIN PORTAL</span>
+    </header>
+
+    <main class="login-container">
+
+        <div class="login-card">
+
+            <div class="login-heading">
+                <span class="login-icon">＋</span>
+
+                <h1>Register Admin</h1>
+
+                <p>
+                    Create a new administrator account
+                    for MMU Navigator.
+                </p>
+            </div>
+
+            <form method="POST" action="{{ url_for('admin_register') }}">
+
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token() }}"
+                >
+
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your full name"
+                        maxlength="100"
+                        autocomplete="name"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="At least 8 characters"
+                        minlength="8"
+                        autocomplete="new-password"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password</label>
+
+                    <input
+                        type="password"
+                        id="confirm_password"
+                        name="confirm_password"
+                        placeholder="Re-enter your password"
+                        autocomplete="new-password"
+                        required
+                    >
+                </div>
+
+                {% if error %}
+                    <p class="error-message" role="alert">
+                        {{ error }}
+                    </p>
+                {% endif %}
+
+                <button type="submit" class="login-button">
+                    Create Account
+                </button>
+
+            </form>
+
+            <a href="{{ url_for('admin_login') }}" class="back-link">
+                ← Back to Admin Login
+            </a>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

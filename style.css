@@ -78,3 +78,32 @@ button, input { font: inherit; color: inherit; }
   height: 100%;
   z-index: 1;
 }
+
+
+/* ADMIN NAVIGATION */
+
+.admin-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.admin-email {
+    font-size: 13px;
+    color: inherit;
+}
+
+.admin-logout-form {
+    margin: 0;
+}
+
+.admin-logout-button {
+    font-family: inherit;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: transparent;
+    border: none;
+    text-decoration: underline;
+}

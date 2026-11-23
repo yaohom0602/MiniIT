@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Admin Login | MMU Navigator</title>
+
+    <link rel="stylesheet" href="/admin.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header class="login-topbar">
+        <a href="/" class="brand">
+            <span class="brand-icon">✦</span>
+            <span>MMU Navigator</span>
+        </a>
+
+        <span class="admin-label">ADMIN PORTAL</span>
+    </header>
+
+    <main class="login-container">
+
+        <div class="login-card">
+
+            <div class="login-heading">
+                <span class="login-icon">⌑</span>
+
+                <h1>Admin Login</h1>
+
+                <p>
+                    Sign in to access the MMU Navigator
+                    administration system.
+                </p>
+            </div>
+
+            <form method="POST" action="{{ url_for('admin_login') }}">
+
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token() }}"
+                >
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your admin email"
+                        autocomplete="username"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+
+                {% if error %}
+                    <p class="error-message" role="alert">
+                        {{ error }}
+                    </p>
+                {% endif %}
+
+                <button type="submit" class="login-button">
+                    Sign In
+                </button>
+
+            </form>
+
+            <a href="{{ url_for('admin_register') }}" class="register-link">
+                Register a new admin
+            </a>
+
+            <a href="/" class="back-link">
+                ← Back to Campus Map
+            </a>
+
+        </div>
+
+    </main>
+
+</body>
+</html>
