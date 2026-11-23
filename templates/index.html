@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@800&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 <body>
@@ -29,10 +29,15 @@
         <div class="search-row">
           <input type="search" placeholder="Search here [CQCR3001]">
         </div>
+
       </div>
 
       <!-- Search results go here -->
-      <div class="results"></div>
+      <div class="results">
+        <div class="location-manager">
+          <a href="{{url_for('manage_locations')}}">Manage Location</a>
+        </div>
+      </div>
     </aside>
 
     <!-- MAP -->
@@ -40,13 +45,25 @@
       <!-- Category chips float over the top of the map -->
       <div class="chips">
         <span class="chip">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3v7a2 2 0 0 0 2 2v9M9 3v7a2 2 0 0 1-2 2M7 3v6"/><path d="M17 21V3c-2.5 1.5-4 4.5-4 8v2h4"/></svg>
-          Starbees
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-utensils preview-icon"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
+          Food
         </span>
         <span class="chip">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20V6M3 12h18v8M21 12V9a2 2 0 0 0-2-2h-8v5"/><circle cx="7" cy="9" r="1.5"/></svg>
-          FCI
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-landmark preview-icon"><path d="M10 18v-7"/><path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z"/><path d="M14 18v-7"/><path d="M18 18v-7"/><path d="M3 22h18"/><path d="M6 18v-7"/></svg>
+          Faculty
         </span>
+        <details class="category-manager">
+          <summary class="chip">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench preview-icon"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg>
+          </summary>
+          <div class="category-board">
+            <h1>Manage Categories</h1>
+            <div class="category-item">
+              Food
+            </div>
+          </div>
+
+        </details>
       </div>
 
       <!-- Map goes here -->
@@ -64,5 +81,6 @@
       attribution: "&copy; OpenStreetMap contributors"
     }).addTo(map);
   </script>
+
 </body>
 </html>
