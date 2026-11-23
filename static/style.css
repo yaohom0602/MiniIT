@@ -276,6 +276,11 @@ button, input { font: inherit; color: inherit; }
 }
 .edit-actions { display: flex; margin-left: auto; gap: 15px; }
 
+#map {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
 /* ---------- Mobile: panel stacks above the map ---------- */
 @media (max-width: 720px) {
   .app { flex-direction: column; }
