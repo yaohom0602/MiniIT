@@ -51,7 +51,7 @@
                 <div class="field">
                     <label for="category">Category</label>
                     <select id="category" name="category" required>
-                        <option value="">Select Faculty</option>
+                        <option value="">Select Category</option>
                         <option value="FCI">FCI</option>
                         <option value="FOE">FOE</option>
                         <option value="FAC">FAC</option>
@@ -60,14 +60,16 @@
                     </select>
                 </div>
 
-                <button type="submit" class="add-btn">+ Add</button>
+                <button type="submit" class="add-btn">+ ADD</button>
             </form>
         </section>
 
         <!-- LIST OF LOCATIONS -->
         <section class="location-list">
-            <h2>List of Locations</h2>
-            <p class="total">Total: {{ locations|length }}</p>
+            <section class="location-title">
+                <h2>Locations</h2>
+                <p class="total">Total: {{ locations|length }}</p>
+            </section>
             {% with messages = get_flashed_messages() %}
                 {% for message in messages %}
                     <div class="flash-message">{{ message }}</div>
@@ -85,11 +87,11 @@
                         </span>
                     </summary>
 
-                    <div class="chip-panel">
-                        <!-- EDIT -->
-                        <form action="{{ url_for('edit_location', location_id=location['id']) }}"
-                            method="POST" class="edit-form">
+                <div class="chip-panel">
+                    <form action="{{ url_for('edit_location', location_id=location['id']) }}"
+                        method="POST" class="edit-form">
 
+                        <div class="edit-row">
                             <input type="text" name="room_code"
                                 value="{{ location['room_code'] }}" required>
 
@@ -101,16 +103,28 @@
                                     </option>
                                 {% endfor %}
                             </select>
+                        </div>
 
+                        <div class="edit-row">
+                            <label for="desc-{{ location['id'] }}">Description</label>
+                            <input type="text" id="desc-{{ location['id'] }}"
+                                name="location_description"
+                                value="{{ location['description'] or '' }}"
+                                placeholder="Optional">
+                        </div>
+
+                        <div class="edit-actions">
                             <button type="submit" class="edit-btn">Save</button>
-                        </form>
+                            <button type="submit" class="delete-btn"
+                                    form="delete-{{ location['id'] }}">Delete</button>
+                        </div>
+                    </form>
 
-                        <!-- DELETE -->
-                        <form action="{{ url_for('remove_location', location_id=location['id']) }}"
-                            method="POST">
-                            <button type="submit" class="delete-btn">Delete</button>
-                        </form>
-                    </div>
+                    <!-- Empty form that the Delete button above submits -->
+                    <form id="delete-{{ location['id'] }}"
+                        action="{{ url_for('remove_location', location_id=location['id']) }}"
+                        method="POST"></form>
+                </div>
                 </details>
 
                 {% else %}

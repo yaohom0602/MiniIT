@@ -13,7 +13,8 @@ def create_table():
 
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             room_code TEXT NOT NULL UNIQUE,
-            category TEXT NOT NULL
+            category TEXT NOT NULL,
+            description TEXT DEFAULT ''
         )
     """)
 
@@ -24,9 +25,9 @@ def add_location(room_code,category):
     conn = get_connection()
     try:
         conn.execute("""
-            INSERT INTO LOCATIONS (room_code, category)
-            VALUES(?,?)
-        """,(room_code,category))
+            INSERT INTO LOCATIONS (room_code, category,description)
+            VALUES(?,?,?)
+        """,(room_code,category,''))
 
         conn.commit()
         return True   
@@ -60,7 +61,7 @@ def delete_location(location_id):
     conn.close()
     return deleted
 
-def update_location(location_id,room_code,category):
+def update_location(location_id,room_code,category,description):
     conn = get_connection()
     
     try:
@@ -68,10 +69,11 @@ def update_location(location_id,room_code,category):
             UPDATE locations
 
             SET room_code = ?,
-                category =?
+                category =?,
+                description = ?
             
             WHERE id = ?
-        """,(room_code,category,location_id))
+        """,(room_code,category,description,location_id))
 
         conn.commit()
         return cursor.rowcount > 0

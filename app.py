@@ -42,11 +42,13 @@ def add_new_location():
 def edit_location(location_id):
     room_code = request.form.get("room_code")
     category = request.form.get("category")
+    description = request.form.get("location_description")
 
     success = update_location(
         location_id,
         room_code,
-        category
+        category,
+        description,
     )
 
     if success:
