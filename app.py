@@ -1,21 +1,74 @@
-from pathlib import Path
-from flask import Flask
+from flask import Flask, render_template,flash,redirect,url_for,request
 
+from database import (
+    create_table,
+    add_location,
+    view_locations,
+    update_location,
+    delete_location 
+)
 app = Flask(__name__)
-
-BASE_DIR = Path(__file__).resolve().parent
-
+app.secret_key = "MMU"
 
 @app.route("/")
 def home():
-    return (BASE_DIR / "index.html").read_text(encoding="utf-8")
+    return render_template("index.html")
 
 
-@app.route("/style.css")
-def stylesheet():
-    css_text = (BASE_DIR / "style.css").read_text(encoding="utf-8")
-    return css_text, 200, {"Content-Type": "text/css"}
+@app.route("/manage_locations")
+def manage_locations():
+    locations = view_locations()
 
+    return render_template(
+        "manage_locations.html",
+        locations = locations
+    )
+
+@app.route("/add_locations" ,methods =["POST"])
+def add_new_location():
+    room_code = request.form.get("room_code")
+    category = request.form.get("category")
+
+    success = add_location(room_code,category)
+
+    if success:
+        flash("Location added")
+    else:
+        flash("This location is already exists")
+
+    return redirect(url_for("manage_locations"))
+
+@app.route("/edit_location/<location_id>" , methods = ["POST"])
+def edit_location(location_id):
+    room_code = request.form.get("room_code")
+    category = request.form.get("category")
+    description = request.form.get("location_description")
+
+    success = update_location(
+        location_id,
+        room_code,
+        category,
+        description,
+    )
+
+    if success:
+        flash("Location updated")
+    else:
+        flash("Unable to update location for some reason")
+
+    return redirect(url_for("manage_locations"))
+
+@app.route("/delete_location/<int:location_id>", methods= ["POST"])
+def remove_location(location_id):
+    success = delete_location(location_id)
+
+    if success:
+        flash("Location deleted")
+    else:
+        flash("Location not found")
+
+    return redirect(url_for("manage_locations"))
 
 if __name__ == "__main__":
+    create_table()
     app.run(debug=True)
