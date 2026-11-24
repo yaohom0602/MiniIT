@@ -3,7 +3,10 @@ from pathlib import Path
 import os
 import sqlite3
 import secrets
+import hashlib
+import secrets
 
+from datetime import datetime, timedelta, timezone
 from contextlib import closing
 from functools import wraps
 
@@ -56,6 +59,17 @@ def init_db():
                 created_at TEXT DEFAULT CURRENT_TIMESTAMP
             )
         """)
+        db.execute("""
+           CREATE TABLE IF NOT EXISTS password_reset_tokens (
+           id INTEGER PRIMARY KEY AUTOINCREMENT,
+           admin_id INTEGER NOT NULL,
+           token_hash TEXT NOT NULL UNIQUE,
+           expires_at TEXT NOT NULL,
+           used INTEGER DEFAULT 0,
+           created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+           FOREIGN KEY (admin_id) REFERENCES admins(id)
+            )
+        """)    
 
         # Check whether the admins table already has a name column
         columns = [
@@ -231,6 +245,159 @@ def logout():
     # Return to homepage.
     return redirect(url_for("home"))
 
+# ==========================================
+# FORGOT PASSWORD
+# ==========================================
+
+@app.route("/admin/forgot-password", methods=["GET", "POST"])
+def forgot_password():
+    message = None
+
+    if request.method == "POST":
+        validate_csrf_token()
+
+        email = request.form.get("email", "").strip().lower()
+
+        if email:
+            with closing(get_db()) as db:
+                admin = db.execute(
+                    "SELECT id FROM admins WHERE email = ?",
+                    (email,)
+                ).fetchone()
+
+                if admin:
+                    # Generate a random token
+                    token = secrets.token_urlsafe(32)
+
+                    # Hash the token before storing it
+                    token_hash = hashlib.sha256(
+                        token.encode()
+                    ).hexdigest()
+
+                    # Token expires in 15 minutes
+                    expires_at = (
+                        datetime.now(timezone.utc) + timedelta(minutes=15)
+                    ).isoformat()
+
+                    # Invalidate any previous unused tokens
+                    db.execute(
+                        """
+                        UPDATE password_reset_tokens
+                        SET used = 1
+                        WHERE admin_id = ? AND used = 0
+                        """,
+                        (admin["id"],)
+                    )
+
+                    # Save the new token
+                    db.execute(
+                        """
+                        INSERT INTO password_reset_tokens
+                        (admin_id, token_hash, expires_at)
+                        VALUES (?, ?, ?)
+                        """,
+                        (admin["id"], token_hash, expires_at)
+                    )
+
+                    db.commit()
+
+                    reset_url = url_for(
+                    "reset_password",
+                    token=token,
+                    _external=True
+                    )
+
+                    print("\n========== PASSWORD RESET ==========")
+                    print(f"Admin email: {email}")
+                    print(f"Reset URL: {reset_url}")
+                    print("Expires in: 15 minutes")
+                    print("=================================\n")
+
+        # Same message whether the account exists or not
+        message = "If the account exists, a password reset link will be sent."
+
+    return render_template("forgot_password.html", message=message)
+
+# ==========================================
+# RESET PASSWORD
+# ==========================================
+
+@app.route("/admin/reset-password/<token>", methods=["GET", "POST"])
+def reset_password(token):
+    error = None
+
+    # Hash the token received from the URL
+    token_hash = hashlib.sha256(token.encode()).hexdigest()
+
+    with closing(get_db()) as db:
+        reset_record = db.execute(
+            """
+            SELECT *
+            FROM password_reset_tokens
+            WHERE token_hash = ? AND used = 0
+            """,
+            (token_hash,)
+        ).fetchone()
+
+        # Check whether token exists
+        if not reset_record:
+            return "Invalid or already used reset link.", 400
+
+        # Check expiration
+        expires_at = datetime.fromisoformat(reset_record["expires_at"])
+
+        if datetime.now(timezone.utc) >= expires_at:
+            db.execute(
+                "UPDATE password_reset_tokens SET used = 1 WHERE id = ?",
+                (reset_record["id"],)
+            )
+            db.commit()
+            return "This reset link has expired. Please request a new one.", 400
+
+        if request.method == "POST":
+            validate_csrf_token()
+
+            password = request.form.get("password", "")
+            confirm_password = request.form.get("confirm_password", "")
+
+            if not password or not confirm_password:
+                error = "Please fill in both password fields."
+
+            elif len(password) < 8:
+                error = "Password must be at least 8 characters long."
+
+            elif password != confirm_password:
+                error = "Passwords do not match."
+
+            else:
+                # Hash the new password
+                new_password_hash = generate_password_hash(password)
+
+                # Update admin password
+                db.execute(
+                    """
+                    UPDATE admins
+                    SET password_hash = ?
+                    WHERE id = ?
+                    """,
+                    (new_password_hash, reset_record["admin_id"])
+                )
+
+                # Mark reset token as used
+                db.execute(
+                    """
+                    UPDATE password_reset_tokens
+                    SET used = 1
+                    WHERE id = ?
+                    """,
+                    (reset_record["id"],)
+                )
+
+                db.commit()
+
+                return redirect(url_for("admin_login"))
+
+    return render_template("reset_password.html", error=error)
 
 # ==========================================
 # CSS FILES
