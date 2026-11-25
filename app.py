@@ -15,7 +15,6 @@ app.secret_key = "MMU"
 app.register_blueprint(location_bp)
 
 BASE_DIR = Path(__file__).resolve().parent
-app = Flask(__name__, template_folder=str(BASE_DIR))
 
 # Flask configuration
 app.config["SECRET_KEY"] = os.environ.get(
