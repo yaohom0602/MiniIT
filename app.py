@@ -194,6 +194,7 @@ def admin_register():
         # Do NOT strip spaces from passwords
         password = request.form.get("password", "")
         confirm_password = request.form.get("confirm_password", "")
+        registration_code = request.form.get("registration_code", "")
 
         if not name or not email or not password or not confirm_password:
             error = "Please fill in all fields."
@@ -203,6 +204,9 @@ def admin_register():
 
         elif password != confirm_password:
             error = "Passwords do not match."
+            
+        elif registration_code != ADMIN_REGISTRATION_CODE:
+            error = "Invalid admin registration code."
 
         else:
             with closing(get_db()) as db:
