@@ -36,6 +36,9 @@ app.config["SECRET_KEY"] = os.environ.get(
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 
+# Admin registration code
+ADMIN_REGISTRATION_CODE = "MMU-Admin-2026"
+
 
 # ==========================================
 # DATABASE
