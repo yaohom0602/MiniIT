@@ -19,7 +19,40 @@
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M15.5 8.5 13.5 13.5 8.5 15.5 10.5 10.5z" fill="currentColor"/></svg>
       <span>MMU Navigator</span>
     </a>
-    <a href="#" class="admin-link">Admin</a>
+    
+<div class="admin-actions">
+
+    {% if session.get('admin_id') %}
+
+        <span class="admin-email">
+            {{ session.get('admin_email') }}
+        </span>
+
+        <form action="{{ url_for('logout') }}" method="POST"
+              class="admin-logout-form">
+
+            <input
+                type="hidden"
+                name="csrf_token"
+                value="{{ csrf_token() }}"
+            >
+
+            <button type="submit" class="admin-link admin-logout-button">
+                Logout
+            </button>
+
+        </form>
+
+    {% else %}
+
+        <a href="{{ url_for('admin.admin_login') }}" class="admin-link">
+            Admin Login
+        </a>
+
+    {% endif %}
+
+</div>
+
   </header>
 
   <div class="app">

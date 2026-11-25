@@ -1,0 +1,234 @@
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: #f4f6fa;
+    color: #17243a;
+    min-height: 100vh;
+}
+
+/* TOPBAR */
+
+.login-topbar {
+    height: 72px;
+    background: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 6%;
+    border-bottom: 1px solid #e5e9f0;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #17243a;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.brand-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    background: #174ea6;
+    color: white;
+    border-radius: 9px;
+}
+
+.admin-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #174ea6;
+}
+
+/* LOGIN CONTAINER */
+
+.login-container {
+    min-height: calc(100vh - 72px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 20px;
+}
+
+/* LOGIN CARD */
+
+.login-card {
+    width: 100%;
+    max-width: 430px;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 14px;
+    box-shadow: 0 8px 30px rgba(20, 40, 80, 0.08);
+}
+
+/* HEADING */
+
+.login-heading {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.login-icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 55px;
+    height: 55px;
+    background: #eaf1ff;
+    color: #174ea6;
+    border-radius: 14px;
+    font-size: 28px;
+    margin-bottom: 18px;
+}
+
+.login-heading h1 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 28px;
+    margin-bottom: 9px;
+}
+
+.login-heading p {
+    font-size: 14px;
+    color: #788397;
+    line-height: 1.6;
+}
+
+/* FORM */
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #dce2eb;
+    border-radius: 7px;
+    outline: none;
+    font-family: inherit;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+    border-color: #174ea6;
+    box-shadow: 0 0 0 3px rgba(23, 78, 166, 0.1);
+}
+
+/* ERROR MESSAGE */
+
+.error-message {
+    color: #d93025;
+    background: #fff0ef;
+    border: 1px solid #ffd6d2;
+    padding: 11px;
+    border-radius: 6px;
+    font-size: 13px;
+    margin-bottom: 18px;
+}
+
+/* LOGIN BUTTON */
+
+.login-button {
+    width: 100%;
+    padding: 14px;
+    background: #174ea6;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.login-button:hover {
+    background: #103b80;
+}
+
+/* BACK LINK */
+
+.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 25px;
+    color: #68758a;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.back-link:hover {
+    color: #174ea6;
+}
+
+/* MOBILE */
+
+@media (max-width: 480px) {
+    .login-card {
+        padding: 28px 22px;
+    }
+
+    .login-topbar {
+        padding: 0 20px;
+    }
+}
+
+/* REGISTER LINK */
+
+.register-link {
+    display: block;
+    text-align: center;
+    margin-top: 18px;
+    color: #174ea6;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.register-link:hover {
+    text-decoration: underline;
+}
+
+.forgot-password-link {
+    display: block;
+    text-align: right;
+    margin-top: -8px;
+    margin-bottom: 18px;
+    font-size: 13px;
+    color: #174ea6;
+    text-decoration: none;
+}
+
+.forgot-password-link:hover {
+    text-decoration: underline;
+}
+
+.success-message {
+    background: #e8f5e9;
+    color: #2e7d32;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 18px;
+}
