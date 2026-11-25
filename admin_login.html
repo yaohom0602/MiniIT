@@ -40,7 +40,7 @@
                 </p>
             </div>
 
-            <form method="POST" action="{{ url_for('admin_login') }}">
+            <form method="POST" action="{{ url_for('admin.admin_login') }}">
 
                 <input
                     type="hidden"
@@ -80,7 +80,7 @@
                     </p>
                 {% endif %}
 
-                <a href="{{ url_for('forgot_password') }}" class="forgot-password-link">
+                <a href="{{ url_for('admin.forgot_password') }}" class="forgot-password-link">
                     Forgot Password?
                 </a>
 
@@ -90,7 +90,7 @@
 
             </form>
 
-            <a href="{{ url_for('admin_register') }}" class="register-link">
+            <a href="{{ url_for('admin.admin_register') }}" class="register-link">
                 Register a new admin
             </a>
 

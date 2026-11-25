@@ -40,7 +40,7 @@
                 </p>
             </div>
 
-            <form method="POST" action="{{ url_for('admin_register') }}">
+            <form method="POST" action="{{ url_for('admin.admin_register') }}">
 
                 <input
                     type="hidden"
@@ -126,7 +126,7 @@
 
             </form>
 
-            <a href="{{ url_for('admin_login') }}" class="back-link">
+            <a href="{{ url_for('admin.admin_login') }}" class="back-link">
                 ← Back to Admin Login
             </a>
 
