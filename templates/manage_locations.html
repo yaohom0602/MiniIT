@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>Manage Locations - MMU Navigator</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header class="topbar">
+
+        <a href="/" class="brand">
+            MMU Navigator
+        </a>
+
+        <a href="/" class="admin-link">
+            Back to Map
+        </a>
+
+    </header>
+
+
+    <main class="manage-container">
+
+        <h1>Manage Locations</h1>
+
+        <!-- ADD LOCATION -->
+        <section class="manage-form">
+            <h2>Add Location</h2>
+
+            <form action="{{ url_for('location.add_new_location') }}" method="POST">
+
+                <div class="field">
+                    <label for="room_code">Location Name</label>
+                    <input type="text" id="room_code" name="room_code"
+                        placeholder="e.g. CQAR2001" required>
+                </div>
+
+                <div class="field">
+                    <label for="category">Category</label>
+                    <select id="category" name="category" required>
+                        <option value="">Select Category</option>
+                        <option value="FCI">FCI</option>
+                        <option value="FOE">FOE</option>
+                        <option value="FAC">FAC</option>
+                        <option value="FCM">FCM</option>
+                        <option value="FOM">FOM</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="add-btn">+ ADD</button>
+            </form>
+        </section>
+
+        <!-- LIST OF LOCATIONS -->
+        <section class="location-list">
+            <section class="location-title">
+                <h2>Locations</h2>
+                <p class="total">Total: {{ locations|length }}</p>
+            </section>
+            {% with messages = get_flashed_messages() %}
+                {% for message in messages %}
+                    <div class="flash-message">{{ message }}</div>
+                {% endfor %}
+            {% endwith %}
+            <div class="chip-list">
+                {% for location in locations %}
+
+                <details class="location-chip">
+                    <summary>
+                        <span class="chip-name">{{ location['room_code'] }}</span>
+                        <span class="chip-badge">{{ location['category'] }}</span>
+                        <span class="chip-wrench" title="Edit / Delete">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings preview-icon"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg>
+                        </span>
+                    </summary>
+
+                <div class="chip-panel">
+                    <form action="{{ url_for('location.edit_location', location_id=location['id']) }}"
+                        method="POST" class="edit-form">
+
+                        <div class="edit-row">
+                            <input type="text" name="room_code"
+                                value="{{ location['room_code'] }}" required>
+
+                            <select name="category" required>
+                                {% for fac in ['FCI', 'FOE', 'FAC', 'FCM', 'FOM'] %}
+                                    <option value="{{ fac }}"
+                                        {% if location['category'] == fac %}selected{% endif %}>
+                                        {{ fac }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="edit-row description-row">
+                            <label for="desc-{{ location['id'] }}">Description</label>
+                            <textarea 
+                                id="desc-{{ location['id'] }}"
+                                name="location_description"
+                                rows="4"
+                                placeholder="Optional">{{ location['description'] or '' }} </textarea>
+                        </div>
+
+                        <div class="edit-actions">
+                            <button type="submit" class="edit-btn">Save</button>
+                            <button type="submit" class="delete-btn"
+                                    form="delete-{{ location['id'] }}">Delete</button>
+                        </div>
+                    </form>
+
+                    <!-- Empty form that the Delete button above submits -->
+                    <form id="delete-{{ location['id'] }}"
+                        action="{{ url_for('location.remove_location', location_id=location['id']) }}"
+                        method="POST"></form>
+                </div>
+                </details>
+
+                {% else %}
+                    <p>No locations registered yet.</p>
+                {% endfor %}
+            </div>
+        </section>
+
+    </main>
+
+</body>
+
+</html>
