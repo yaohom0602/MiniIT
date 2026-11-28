@@ -40,7 +40,7 @@
         <section class="manage-form">
             <h2>Add Location</h2>
 
-            <form action="{{ url_for('add_new_location') }}" method="POST">
+            <form action="{{ url_for('location.add_new_location') }}" method="POST">
 
                 <div class="field">
                     <label for="room_code">Location Name</label>
@@ -88,7 +88,7 @@
                     </summary>
 
                 <div class="chip-panel">
-                    <form action="{{ url_for('edit_location', location_id=location['id']) }}"
+                    <form action="{{ url_for('location.edit_location', location_id=location['id']) }}"
                         method="POST" class="edit-form">
 
                         <div class="edit-row">
@@ -123,7 +123,7 @@
 
                     <!-- Empty form that the Delete button above submits -->
                     <form id="delete-{{ location['id'] }}"
-                        action="{{ url_for('remove_location', location_id=location['id']) }}"
+                        action="{{ url_for('location.remove_location', location_id=location['id']) }}"
                         method="POST"></form>
                 </div>
                 </details>
