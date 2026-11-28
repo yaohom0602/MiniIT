@@ -110,7 +110,7 @@
      minZoom: 17,
      maxZoom: 19,
      maxBounds: [
-        [2.924961972905159, 100.63835728600566], // Southwest boundary
+        [2.924961972905159, 101.63835728600566], // Southwest boundary
         [2.931058710832172, 101.64544904650079]  // Northeast boundary
      ],
      maxBoundsViscosity: 1.0
@@ -121,6 +121,209 @@
       referrerPolicy: "strict-origin-when-cross-origin",
       attribution: "&copy; OpenStreetMap contributors"
     }).addTo(map);
+
+    // Campus locations
+    const locations = [
+     {
+        name: "Faculty of Management (FOM)",
+        category: "Faculties",
+        description: "",
+        latitude: 2.929082259531549,
+        longitude: 101.64139037783555
+     },
+     {
+        name: "Faculty of Computing and Informatics (FCI)",
+        category: "Faculties",
+        description: "",
+        latitude: 2.9284072257119123,
+        longitude: 101.6415808146708
+     },
+     {
+        name: "Faculty of Artificial Intelligence and Engineering (FAIE)",
+        category: "Faculties",
+        description: "",
+        latitude: 2.9263927319085226,
+        longitude: 101.64137052764329
+     },
+     {
+        name: "Faculty of Creative Multimedia (FCM)",
+        category: "Faculties",
+        description: "",
+        latitude: 2.9263311560088963,
+        longitude: 101.64238336331564
+     },
+     {
+        name: "Starbees",
+        category: "Food",
+        description: "",
+        latitude: 2.927849170310881,
+        longitude: 101.6430312161868
+     },
+     {
+        name: "Kafe FOM",
+        category: "Food",
+        description: "",
+        latitude: 2.929258799037599,
+        longitude: 101.64097607104763
+     },
+     {
+        name: "He and She Coffee",
+        category: "Food",
+        description: "",
+        latitude: 2.9276419926947983,
+        longitude: 101.64175186819351
+     },
+     {
+        name: "Express Delight Bakery",
+        category: "Food",
+        description: "",
+        latitude: 2.9272448996150593,
+        longitude: 101.64184818942755
+     },
+     {
+        name: "Restoren Haji Tapah Bistro",
+        category: "Food",
+        description: "",
+        latitude: 2.9271127047548267,
+        longitude: 101.64177762506522
+     },
+     {
+        name: "Dean Cafe",
+        category: "Food",
+        description: "",
+        latitude: 2.9253805164439255,
+        longitude: 101.64246241529088
+     },
+     {
+        name: "MMU Chancellery Building",
+        category: "Buildings",
+        description: "",
+        latitude: 2.9298548509675992,
+        longitude: 101.64209713689212
+     },
+     {
+        name: "Dewan Tun Chancellor (DTC)",
+        category: "Buildings",
+        description: "",
+        latitude: 2.9292978108637935,
+        longitude: 101.64202699522222
+     },
+     {
+        name: "Admin Building",
+        category: "Services",
+        description: "IPS and ERU",
+        latitude: 2.928766644756653,
+        longitude: 101.64287848509336
+     },
+     {
+        name: "Central Learning Complex (CLC)",
+        category: "Buildings",
+        description: "",
+        latitude: 2.9276456059047096,
+        longitude: 101.64230851565993
+     },
+     {
+        name: "Library",
+        category: "Facilities",
+        description: "",
+        latitude: 2.9275920317377158,
+        longitude: 101.64175329841248
+     },
+     {
+        name: "MMU Swimming Pool",
+        category: "Facilities",
+        description: "",
+        latitude: 2.9285155160772116,
+        longitude: 101.6434645477558
+     },
+     {
+        name: "MMU Stadium",
+        category: "Facilities",
+        description: "",
+        latitude: 2.9278940560727995,
+        longitude: 101.64380518829802
+     },
+     {
+        name: "MMU Hockey Field",
+        category: "Facilities",
+        description: "",
+        latitude: 2.9280735294699625,
+        longitude: 101.64495853817115
+     },
+     {
+        name: "MMU Tennis Court",
+        category: "Facilities",
+        description: "",
+        latitude: 2.927300876613967,
+        longitude: 101.6450467120974
+     },
+     {
+        name: "MMU Indoor Sports Center",
+        category: "Facilities",
+        description: "",
+        latitude: 2.9272352482430217,
+        longitude: 101.64310345165377
+     },
+     {
+        name: "Student Affairs Division",
+        category: "Services",
+        description: "",
+        latitude: 2.9255556962819576,
+        longitude: 101.64202118034102
+     },
+     {
+        name: "FOM Parking",
+        category: "Parking",
+        description: "",
+        latitude: 2.929519444965187,
+        longitude: 101.64075337441228
+     },
+     {
+        name: "DTC Parking",
+        category: "Parking",
+        description: ".",
+        latitude: 2.930123081038802,
+        longitude: 101.64272970133177
+     },
+     {
+        name: "FCI Parking",
+        category: "Parking",
+        description: ".",
+        latitude: 2.9282738470139233,
+        longitude: 101.64084456951356
+     },
+     {
+        name: "Library Parking",
+        category: "Parking",
+        description: ".",
+        latitude: 2.9274488050231287,
+        longitude: 101.64111279041065
+     },
+     {
+        name: "FCM Parking",
+        category: "Parking",
+        description: "",
+        latitude: 2.9266097960764856,
+        longitude: 101.64296408909587
+     },
+    ];
+
+
+// Display markers on the map
+locations.forEach(function(location) {
+
+    const marker = L.marker([
+        location.latitude,
+        location.longitude
+    ]).addTo(map);
+
+    marker.bindPopup(`
+        <h3>${location.name}</h3>
+        <p><b>Category:</b> ${location.category}</p>
+        <p>${location.description}</p>
+    `);
+
+});
   </script>
 
 </body>
